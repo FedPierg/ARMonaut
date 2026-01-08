@@ -6,7 +6,7 @@
 **Antibiotic & Metal Resistance Annotation Explorer Workflow**  
 Developed by *Federica Piergiacomo*, Free University of Bozen-Bolzano.
 
-[![Nextflow](https://img.shields.io/badge/Nextflow-%E2%89%A524.04-blue.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/Nextflow-23.x-blue.svg)](https://www.nextflow.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/FedPierg/ARMonaut.svg)](https://github.com/FedPierg/ARMonaut/releases)
 [![Made with Singularity](https://img.shields.io/badge/Made%20with-Singularity-blue)](https://sylabs.io/singularity/)
@@ -75,7 +75,7 @@ databases/
 
 ### 🧠 Requirements
 - Linux or macOS
-- [Nextflow ≥ 24.04](https://www.nextflow.io/)
+- Nextflow ≥ 23.10 (tested with 23.10.1)
 - [Singularity ≥ 3.9](https://sylabs.io/singularity/) *or* [Docker](https://www.docker.com/)
 - Optional: SLURM for HPC clusters
 - ≥ 100 GB free disk space (required for CARD, BacMet2 databases and intermediate files)
@@ -215,14 +215,15 @@ results/
 ---
 
 ### 📘 Citation
-If you use **ARMonaut**, please cite:
 
-> **Piergiacomo, F. (2025-2026).**  
-> *ARMonaut: A modular workflow for antibiotic and metal resistance annotation in metagenomes.*  
+If you use **ARMonaut**, please cite the software as:
+
+> **Piergiacomo, F. (2025).**  
+> *ARMonaut: A modular workflow for antibiotic and metal resistance annotation in microbial genomes and metagenomes.*  
 > Free University of Bozen-Bolzano.  
-> Available at: [https://github.com/FedPierg/ARMonaut](https://github.com/FedPierg/ARMonaut)
+> **Zenodo.** https://doi.org/10.5281/zenodo.18187986
 
-*(A Zenodo DOI will be added upon public release.)*
+A manuscript describing ARMonaut is currently **under review / in preparation** and will be linked here upon publication.
 
 ---
 
@@ -272,5 +273,5 @@ ARMonaut/
 
 ---
 
-💡 *ARMonaut v1.0.0 — reproducible, modular, and portable workflow for microbial resistance annotation.*
+💡 *ARMonaut v1.0.1 — reproducible, modular, and portable workflow for microbial resistance annotation.*
 
