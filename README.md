@@ -11,7 +11,7 @@ Developed by *Federica Piergiacomo*, Free University of Bozen-Bolzano.
 [![GitHub release](https://img.shields.io/github/v/release/FedPierg/ARMonaut.svg)](https://github.com/FedPierg/ARMonaut/releases)
 [![Made with Singularity](https://img.shields.io/badge/Made%20with-Singularity-blue)](https://sylabs.io/singularity/)
 [![Made with Docker](https://img.shields.io/badge/Made%20with-Docker-blue)](https://www.docker.com/)
-[![DOI](https://zenodo.org/badge/latestdoi/18187985)](https://doi.org/10.5281/zenodo.18187985)
+[![DOI](https://zenodo.org/badge/latestdoi/18187986)](https://doi.org/10.5281/zenodo.18187986)
 ---
 
 ## 📑 Table of Contents
