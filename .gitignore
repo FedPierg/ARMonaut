@@ -1,0 +1,12 @@
+# Nextflow
+.nextflow*
+work/
+*.log
+
+# Results
+results/
+
+# Temporary
+*.tmp
+
+
