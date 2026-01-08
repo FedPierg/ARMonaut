@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" width="280">
+  <img src="assets/logo.jpg" alt="ARMonaut logo" width="280">
 </p>
 
 # 🧬 ARMonaut
@@ -253,13 +253,20 @@ Special thanks to:
 ### 🧭 Project structure
 ```
 ARMonaut/
+├── assets/               # Images and graphical assets
+│   └── logo.jpg          # ARMonaut logo
 ├── bin/                  # Module scripts (.sh)
-├── data/                 # Input FASTA files
+├── data/                 # Input FASTA files (FASTA)
+│   └── test.fa           # Example test sequence
 ├── databases/            # Automatically downloaded databases
+├── environments/         # Conda environments
+│   └── environment.yml
+├── jobs/                 # SLURM job wrappers (.sbatch)
 ├── results/              # Output results
 ├── main.nf               # Main Nextflow pipeline
 ├── nextflow.config       # Resources and containers
-├── nextflow_schema.json  # Parameter schema
+├── _config.yml           # GitHub Pages configuration
+├── LICENSE
 └── README.md
 ```
 
