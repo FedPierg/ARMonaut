@@ -1,0 +1,29 @@
+name: armonaut
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  - python =3.10
+  - pandas
+
+  # --- Resistance tools ---
+  - rgi =6.0.3
+  - plasmidfinder =2.1.6
+
+  # --- Annotation tools ---
+  - diamond =2.1.9
+  - prodigal =2.6.3
+  - blast =2.15.0
+  - prokka =1.14.6
+  - barrnap =0.9
+
+  # --- Container runtime (optional, dev only) ---
+  # - singularity =3.11.4
+
+  - pip
+  - pip:
+      - tqdm
+      - numpy
+      - biopython

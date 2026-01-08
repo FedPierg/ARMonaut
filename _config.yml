@@ -1,0 +1,16 @@
+title: "🧬 ARMonaut"
+description: "Antibiotic & Metal Resistance Annotation Explorer Workflow"
+theme: jekyll-theme-cayman
+show_downloads: true
+github:
+  is_project_page: true
+  repository_url: https://github.com/FedPierg/ARMonaut
+author:
+  name: "Federica Piergiacomo"
+  affiliation: "Free University of Bozen-Bolzano"
+  email: "federica.piergiacomo@unibz.it"
+plugins:
+  - jekyll-seo-tag
+  - jekyll-github-metadata
+  - jekyll-sitemap
+  - jekyll-feed
