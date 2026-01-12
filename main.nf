@@ -10,7 +10,7 @@ params.enable_bacmet  = true
 params.enable_barrnap = true
 params.enable_plasmid = true
 params.enable_prokka  = true
-
+params.test = false
 // ===========================
 // CHANNELS
 // ===========================
@@ -51,6 +51,7 @@ process ARG_ANNOT {
   """
   mkdir -p work_in
   cp $infile work_in/
+  TEST_MODE=${params.test:-false} \
   bash ${projectDir}/bin/ARG_annotation.sh \\
     --input work_in \\
     --outdir . \\
