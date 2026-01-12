@@ -7,23 +7,20 @@
 #SBATCH --error=logs/PlasmidFinder-%j.err
 
 ################################################################################
-# ARMonaut - PlasmidFinder Annotation (SLURM wrapper)
+# ARMonaut - PlasmidFinder Annotation HPC Wrapper
 # Author: Federica Piergiacomo
 ################################################################################
-module load nextflow/23.10.1-gcc-12.1.0
+
 module load singularity/3.11.4 2>/dev/null || \
   echo "[WARN] Singularity module not found, assuming it is in PATH."
 
 mkdir -p logs
 
-nextflow run . \
-  -profile slurm \
+bash bin/Plasmid_annotation.sh \
   --input data \
-  --outdir results \
-  --enable_rgi false \
-  --enable_bacmet false \
-  --enable_barrnap false \
-  --enable_prokka false \
+  --outdir results/plasmidfinder \
   --threads 8
+
 echo "[✅ DONE] PlasmidFinder completed at $(date)"
+
 
