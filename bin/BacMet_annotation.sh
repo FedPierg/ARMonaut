@@ -47,6 +47,7 @@ log "[INFO] Input dir:  $INPUT_DIR"
 log "[INFO] Output dir: $OUTPUT_DIR"
 log "[INFO] DB dir:     $BACMET_DIR"
 log "[INFO] Threads:    $THREADS"
+log "[INFO] Test mode: ${TEST_MODE}
 
 # ==========================
 # DOWNLOAD DATABASE IF NEEDED
