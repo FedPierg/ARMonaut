@@ -9,7 +9,7 @@ INPUT_DIR=""
 OUTPUT_DIR=""
 CARD_DIR=""
 THREADS=8
-
+TEST_MODE="${TEST_MODE:-false}"
 # ==========================
 # PARSE ARGUMENTS
 # ==========================
@@ -44,23 +44,26 @@ log "[INFO] Threads: ${THREADS}"
 log "[INFO] Input dir: ${INPUT_DIR}"
 log "[INFO] Output dir: ${OUTPUT_DIR}"
 log "[INFO] CARD dir: ${CARD_DIR}"
+log "[INFO] Test mode: ${TEST_MODE}"
 
 # ==========================
-# DOWNLOAD CARD DATABASE (once)
+# DOWNLOAD CARD DATABASE (only if not test)
 # ==========================
-if [[ ! -f "${CARD_DIR}/card.json" ]]; then
-  log "[INFO] Downloading CARD database..."
-
-  wget -q https://card.mcmaster.ca/latest/data \
-    -O "${CARD_DIR}/card_data.tar.gz"
-
-  tar -xzf "${CARD_DIR}/card_data.tar.gz" -C "${CARD_DIR}"
-
-  CARD_JSON=$(find "${CARD_DIR}" -name card.json | head -n 1)
-  [[ -z "$CARD_JSON" ]] && { echo "[ERROR] card.json not found"; exit 1; }
-
-  mv "$CARD_JSON" "${CARD_DIR}/card.json"
-  rm -f "${CARD_DIR}/card_data.tar.gz"
+if [[ "$TEST_MODE" != true ]]; then
+  if [[ ! -f "${CARD_DIR}/card.json" ]]; then
+    log "[INFO] Downloading CARD database..."
+    mkdir -p "$CARD_DIR"
+    wget -q https://card.mcmaster.ca/latest/data -O "${CARD_DIR}/card_data.tar.gz"
+    tar -xzf "${CARD_DIR}/card_data.tar.gz" -C "$CARD_DIR"
+    CARD_JSON=$(find "$CARD_DIR" -name card.json | head -n1)
+    [[ -z "$CARD_JSON" ]] && { echo "[ERROR] card.json not found"; exit 1; }
+    mv "$CARD_JSON" "${CARD_DIR}/card.json"
+    rm -f "${CARD_DIR}/card_data.tar.gz"
+  fi
+else
+  log "[INFO] Test mode: skipping CARD download."
+  mkdir -p "$CARD_DIR"
+  echo "{}" > "${CARD_DIR}/card.json"  # dummy file per test
 fi
 
 # ==========================
@@ -79,15 +82,17 @@ for fasta in "${FASTAS[@]}"; do
   base=$(basename "$fasta")
   prefix="${base%.*}"
 
-  log "[RUN] ${base}"
-
-  rgi main \
-    --input_sequence "$fasta" \
-    --output_file "${OUTPUT_DIR}/${prefix}_rgi" \
-    --card_json "${CARD_DIR}/card.json" \
-    --local \
-    --num_threads "${THREADS}"
-
+   if [[ "$TEST_MODE" = true ]]; then
+    log "[TEST] Skipping actual RGI run for $base"
+    touch "${OUTPUT_DIR}/${prefix}_rgi.json"  # dummy output
+  else
+    rgi main \
+      --input_sequence "$fasta" \
+      --output_file "${OUTPUT_DIR}/${prefix}_rgi" \
+      --card_json "${CARD_DIR}/card.json" \
+      --local \
+      --num_threads "${THREADS}"
+  fi
 done
 
 log "[✅ COMPLETED] RGI annotation finished successfully."
