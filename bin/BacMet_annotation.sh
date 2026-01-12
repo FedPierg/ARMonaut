@@ -87,7 +87,11 @@ for fa in "${FASTAS[@]}"; do
   out="$OUTPUT_DIR/${sample}_bacmet.tsv"
 
   log "[RUN] ${sample}"
-
+ if [[ "${TEST_MODE:-false}" == "true" ]]; then
+    log "[INFO] TEST_MODE active – creating dummy BacMet2 output"
+    echo -e "qseqid\tsseqid\tpident\tlength\tmismatch\tgapopen\tqstart\tqend\tsstart\tsend\tevalue\tbitscore" > "$out"
+    echo -e "${sample}\tTESTSEQ\t100\t10\t0\t0\t1\t10\t1\t10\t1e-5\t100" >> "$out"
+ else
   diamond blastx \
     --db "$BACMET_DB" \
     --query "$fa" \
@@ -96,7 +100,7 @@ for fa in "${FASTAS[@]}"; do
     --threads "$THREADS" \
     --max-target-seqs 1 \
     --evalue 1e-5
-
+ fi
 done
 
 log "[✅ COMPLETED] BacMet2 annotation finished successfully."
