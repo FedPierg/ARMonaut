@@ -10,6 +10,7 @@ DB_DIR="${DB_DIR:-$(pwd)/plasmidfinder_db}"
 IDENTITY=0.95
 COVERAGE=0.60
 THREADS=4
+TEST_MODE="${TEST_MODE:-false}"
 
 log(){ echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
@@ -40,15 +41,20 @@ mkdir -p "$OUTPUT_DIR" "$DB_DIR"
 log "[INFO] Input dir:  $INPUT_DIR"
 log "[INFO] Output dir: $OUTPUT_DIR"
 log "[INFO] DB dir:     $DB_DIR"
+log "[INFO] Test mode: ${TEST_MODE}"
 
 # ==========================
 # DOWNLOAD DATABASE IF NEEDED
 # ==========================
-if [[ ! -f "$DB_DIR/plasmidfinder_db.fsa" ]]; then
-  log "[INFO] Downloading PlasmidFinder database..."
-  git clone https://bitbucket.org/genomicepidemiology/plasmidfinder_db.git "$DB_DIR/tmp"
-  mv "$DB_DIR/tmp"/* "$DB_DIR"
-  rm -rf "$DB_DIR/tmp"
+if [[ "${TEST_MODE:-false}" != "true" ]]; then
+  if [[ ! -f "$DB_DIR/plasmidfinder_db.fsa" ]]; then
+    log "[INFO] Downloading PlasmidFinder database..."
+    git clone https://bitbucket.org/genomicepidemiology/plasmidfinder_db.git "$DB_DIR/tmp"
+    mv "$DB_DIR/tmp"/* "$DB_DIR"
+    rm -rf "$DB_DIR/tmp"
+  fi
+else
+  log "[INFO] TEST_MODE active – skipping PlasmidFinder database download"
 fi
 
 # ==========================
@@ -68,13 +74,19 @@ for fa in "${FASTAS[@]}"; do
 
   log "[RUN] PlasmidFinder on $sample"
 
-  plasmidfinder.py \
-    -i "$fa" \
-    -o "$outdir" \
-    -p "$DB_DIR" \
-    -t "$IDENTITY" \
-    -l "$COVERAGE"
-
+  if [[ "${TEST_MODE:-false}" == "true" ]]; then
+    log "[INFO] TEST_MODE active – creating dummy PlasmidFinder output"
+    mkdir -p "$outdir"
+    echo -e "replicon\tidentity\tcoverage" > "$outdir/${sample}_plasmidfinder.tsv"
+    echo -e "TEST_REP\t100\t100" >> "$outdir/${sample}_plasmidfinder.tsv"
+  else
+    plasmidfinder.py \
+      -i "$fa" \
+      -o "$outdir" \
+      -p "$DB_DIR" \
+      -t "$IDENTITY" \
+      -l "$COVERAGE"
+  fi
 done
 
 log "[✅ COMPLETED] PlasmidFinder annotation finished."
