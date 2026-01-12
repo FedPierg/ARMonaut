@@ -150,6 +150,7 @@ nextflow run . -profile test \
 --input "data" \
 --outdir "results_test"
 ```
+---
 This profile forces **1 CPU and 2 GB RAM** for every process —  
 ideal for testing workflow structure and database setup without heavy computation.
 The `--input` parameter can be either a directory containing FASTA files 
