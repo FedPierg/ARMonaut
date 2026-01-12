@@ -10,20 +10,17 @@
 # ARMonaut - Barrnap 16S Annotation HPC Wrapper
 # Author: Federica Piergiacomo
 ################################################################################
-module load nextflow/23.10.1-gcc-12.1.0
-module load singularity/3.11.4 2>/dev/null || echo "[WARN] Singularity module not found, assuming it is in PATH."
+
+module load singularity/3.11.4 2>/dev/null || \
+  echo "[WARN] Singularity module not found, assuming it is in PATH."
 
 mkdir -p logs
 
-nextflow run . \
-  -profile slurm \
+bash bin/Barrnap_16S.sh \
   --input data \
-  --outdir results \
-  --enable_rgi false \
-  --enable_bacmet false \
-  --enable_plasmid false \
-  --enable_prokka false \
+  --outdir results/barrnap \
   --threads 4
 
 echo "[✅ DONE] Barrnap 16S completed at $(date)"
+
 
