@@ -78,6 +78,7 @@ process BACMET_ANNOT {
   """
   mkdir -p work_in
   cp $infile work_in/
+  TEST_MODE=${params.test:-false} \
   bash ${projectDir}/bin/BacMet_annotation.sh \\
     --input work_in \\
     --outdir . \\
@@ -131,6 +132,7 @@ process PLASMIDFINDER {
   """
   mkdir -p work_in
   cp $infile work_in/
+  TEST_MODE=${params.test:-false} \
   bash ${projectDir}/bin/Plasmid_annotation.sh \\
     --input work_in \\
     --outdir . \\
