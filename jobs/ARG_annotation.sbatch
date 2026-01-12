@@ -18,13 +18,10 @@ module load singularity/3.11.4 2>/dev/null || \
 
 mkdir -p logs
 
-nextflow run . \
-  -profile slurm \
+bash bin/ARG_annotation.sh \
   --input data \
-  --outdir results \
-  --enable_bacmet false \
-  --enable_barrnap false \
-  --enable_plasmid false \
-  --enable_prokka false \
+  --outdir results/rgi \
+  --card databases/card_db \
   --threads 16
-echo "[✅ DONE] BacMet annotation completed at $(date)"
+
+echo "[✅ DONE] ARG annotation completed at $(date)"
