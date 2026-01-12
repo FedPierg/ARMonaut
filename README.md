@@ -108,7 +108,7 @@ The recommended and supported way to run ARMonaut is via **Singularity or Docker
 nextflow run . -profile standard \
   --input "data/*.{fa,fasta,fna}" \
   --outdir "results" \
-  --carddir "databases/card_db"
+  --carddir "$PWD/databases/card_db"
 ```
 
 #### ▶ HPC (SLURM)
@@ -116,7 +116,7 @@ nextflow run . -profile standard \
 nextflow run . -profile slurm \
   --input "/path/to/*.fasta" \
   --outdir "results" \
-  --carddir "databases/card_db"
+  --carddir "$PWD/databases/card_db"
 ```
 
 #### ▶ Run specific modules
@@ -146,13 +146,14 @@ nextflow run . -profile slurm --threads 8
 #### 🔹 Lightweight test mode
 A lightweight testing profile is available to verify pipeline setup on a single CPU:
 ```bash
-nextflow run . -profile test /
---input "data"
+nextflow run . -profile test \
+--input "data" \
 --outdir "results_test"
---carddir "databases/card_db"
 ```
 This profile forces **1 CPU and 2 GB RAM** for every process —  
 ideal for testing workflow structure and database setup without heavy computation.
+The `--input` parameter can be either a directory containing FASTA files 
+or a glob pattern (e.g. `data/*.fa`).
 ---
 
 ### 🧮 Run Modules Individually on HPC (SLURM)
@@ -160,6 +161,7 @@ ideal for testing workflow structure and database setup without heavy computatio
 Each ARMonaut module can be executed independently using the provided SLURM job wrappers located in the `jobs/` folder.  
 These `.sbatch` scripts automatically handle resource requests and call the corresponding executable in `bin/`.  
 All required databases are handled automatically by each module script.
+This execution mode is independent from the Nextflow pipeline: when using `jobs/*.sbatch`, all computational resources are defined by SLURM directives, while the Nextflow workflow manages resources exclusively through `nextflow.config` and execution profiles.
 
 Example usage:
 
