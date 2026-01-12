@@ -8,6 +8,7 @@
 INPUT_DIR=""
 OUTPUT_DIR=""
 THREADS=8
+TEST_MODE="${TEST_MODE:-false}"
 
 # Database paths
 BACMET_DIR="${BACMET_DIR:-$(pwd)/bacmet2}"
@@ -50,7 +51,7 @@ log "[INFO] Threads:    $THREADS"
 # ==========================
 # DOWNLOAD DATABASE IF NEEDED
 # ==========================
-if [[ ! -f "$BACMET_DB" ]]; then
+if [[ "${TEST_MODE:-false}" != "true" ]] && [[ ! -f "$BACMET_DB" ]]; then
   log "[INFO] BacMet2 database not found – downloading..."
 
   wget -q "$BACMET_FASTA_URL" -O "${BACMET_FASTA}.gz"
@@ -62,7 +63,10 @@ if [[ ! -f "$BACMET_DB" ]]; then
     --db "$BACMET_DIR/bacmet_db"
 
   log "[DONE] Database ready: $BACMET_DB"
+else
+  log "[INFO] TEST_MODE active or DB already exists – skipping download."
 fi
+
 
 # ==========================
 # RUN DIAMOND BLASTX
